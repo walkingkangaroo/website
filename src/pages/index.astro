@@ -1,58 +1,104 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import StageMeter from '../components/StageMeter.astro';
-import { getProjects } from '../lib/content';
+import HomeHero from '../components/HomeHero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+import PostCard from '../components/PostCard.astro';
+import AboutSection from '../components/AboutSection.astro';
+import NewsletterBand from '../components/NewsletterBand.astro';
+import { getFeaturedProject, getProjects, getPublishedPosts } from '../lib/content';
 
-// Temporary check page: the home-page issue replaces it.
-const projects = await getProjects();
+const featured = await getFeaturedProject();
+const others = (await getProjects()).filter((project) => !project.data.featured);
+// The Devlog section is left out entirely until there is a published post.
+const latestPosts = (await getPublishedPosts()).slice(0, 3);
 ---
 
-<BaseLayout
-  title="Walking Kangaroo"
-  description="The games and apps Walking Kangaroo is making, how far along each one is, and a devlog."
->
-  <div class="container">
-    <h1>Walking Kangaroo</h1>
-    <ul class="projects">
-      {
-        projects.map((project) => (
-          <li>
-            <h2>{project.data.name}</h2>
-            <p class="type">{project.data.type}</p>
-            <p>{project.data.oneLiner}</p>
-            <div class="meters">
-              <StageMeter stage={project.data.stage} size="sm" label="short" />
-              <StageMeter stage={project.data.stage} size="md" label="long" />
-              <StageMeter stage={project.data.stage} size="lg" label="steps" />
-            </div>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+{/* The description is a draft for Grant to check in the pull request. */}
+<BaseLayout title="Walking Kangaroo" description="Grant's games and apps, and how far along each one is.">
+  <HomeHero project={featured} />
+
+  <section id="games" class="container section">
+    <div class="section__head">
+      <h2>Also in the works</h2>
+      <span class="section__note">Nothing's out yet. Here's everything on the go.</span>
+    </div>
+    <div class="projects">
+      {others.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <StepsStrip />
+
+  {
+    latestPosts.length > 0 && (
+      <section id="devlog" class="container section section--devlog">
+        <div class="section__head section__head--ruled">
+          <h2>Devlog</h2>
+          <a class="all-posts" href="/devlog/">
+            All posts →
+          </a>
+        </div>
+        <div class="posts">
+          {latestPosts.map((post) => <PostCard post={post} />)}
+        </div>
+      </section>
+    )
+  }
+
+  <AboutSection />
+  <NewsletterBand />
 </BaseLayout>
 
 <style>
-  .projects {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .projects li {
-    padding: 24px 0;
-    border-top: 1px solid var(--site-rule);
-  }
-
-  .type {
-    color: var(--site-text-quiet);
-    margin: 0 0 0.5em;
-  }
-
-  .meters {
+  .section {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    gap: 28px;
+    padding-top: clamp(56px, 8vw, 96px);
+    padding-bottom: clamp(40px, 6vw, 64px);
+  }
+
+  .section--devlog {
+    padding-top: 32px;
+    padding-bottom: clamp(56px, 8vw, 96px);
+  }
+
+  .section__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
     gap: 16px;
+  }
+
+  .section__head--ruled {
+    padding-top: 20px;
+    border-top: 2px solid var(--wk-ink);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(28px, 5vw, 36px);
+  }
+
+  .section__note {
+    color: var(--site-text-quiet);
+  }
+
+  .all-posts {
+    font-weight: 600;
+  }
+
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 28px;
+  }
+
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 32px;
   }
 </style>

@@ -1,0 +1,72 @@
+---
+import { getEntry } from 'astro:content';
+import MediaPanel from './MediaPanel.astro';
+import type { Post } from '../lib/content';
+
+interface Props {
+  post: Post;
+  /** The title's heading level. The home page's Devlog section is under an h2. */
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { post, headingLevel: Heading = 'h3' } = Astro.props;
+const { title, date, project: projectRef, cover } = post.data;
+const project = projectRef ? await getEntry(projectRef) : undefined;
+
+// "5 October 2026". Posts are dated by day, parsed as midnight UTC, so format in UTC too.
+const dateText = new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
+const dateIso = date.toISOString().slice(0, 10);
+---
+
+<a class="card" href={`/devlog/${post.id}/`}>
+  {/* The title sits right below, so the cover needs no alt text of its own. */}
+  <MediaPanel image={cover} aspect="16 / 9" alt="" radius="14px" sizes="(min-width: 700px) 400px, 100vw" />
+  <span class="meta">
+    <time datetime={dateIso}>{dateText}</time>
+    {
+      project && (
+        <>
+          {' · '}
+          <span class="project">{project.data.name}</span>
+        </>
+      )
+    }
+  </span>
+  <Heading class="title">{title}</Heading>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--wk-ink);
+    text-decoration: none;
+  }
+
+  .card:hover {
+    color: var(--wk-ink);
+  }
+
+  .card:hover .title {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .meta {
+    font-size: 14px;
+    color: var(--site-text-quiet);
+  }
+
+  .project {
+    font-weight: 600;
+    color: var(--wk-rust);
+  }
+
+  .title {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.25;
+  }
+</style>

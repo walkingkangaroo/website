@@ -1,0 +1,113 @@
+---
+import markPaper from '../assets/brand/walking-kangaroo-mark-paper.svg';
+---
+
+<section id="news" class="band">
+  <div class="container band__inner">
+    <div class="band__pitch">
+      <img src={markPaper.src} width="50" height={Math.round((50 * markPaper.height) / markPaper.width)} alt="" />
+      <h2>Be there for the first release.</h2>
+    </div>
+    {/* Posts nowhere yet: the Newsletter step connects this form to Kit (decision 0006). */}
+    <form class="band__form">
+      <label for="news-email">Email address</label>
+      <span class="field">
+        <input id="news-email" type="email" autocomplete="email" placeholder="you@example.com" />
+        <button type="button">Subscribe</button>
+      </span>
+    </form>
+  </div>
+</section>
+
+<style>
+  .band {
+    background: var(--wk-rust);
+    color: var(--wk-paper);
+  }
+
+  .band__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    padding-block: clamp(48px, 7vw, 72px);
+  }
+
+  .band__pitch {
+    flex: 1 1 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .band__pitch img {
+    display: block;
+    height: auto;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 34px);
+    line-height: 1.15;
+  }
+
+  .band__form {
+    flex: 1 1 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .field {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  input,
+  button {
+    min-height: 44px;
+    font: inherit;
+    border: 0;
+    border-radius: 999px;
+  }
+
+  input {
+    flex: 1 1 200px;
+    min-width: 0;
+    padding: 14px 18px;
+    background: var(--wk-paper);
+    color: var(--wk-ink);
+  }
+
+  input::placeholder {
+    color: var(--site-text-quiet);
+    opacity: 1;
+  }
+
+  button {
+    padding: 14px 24px;
+    background: var(--wk-ink);
+    color: var(--wk-paper);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: var(--wk-paper);
+    color: var(--wk-ink);
+  }
+
+  /* The page's Ink focus ring would vanish on Rust. */
+  input:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--wk-paper);
+    outline-offset: 3px;
+  }
+</style>

@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+
+const { bio, photo, links } = site;
+---
+
+<section id="about" class="about">
+  <div class="container about__inner">
+    {
+      photo && (
+        <Image class="photo" src={photo} alt="Grant" width={320} height={320} densities={[1, 2]} />
+      )
+    }
+    <div class="about__text">
+      <h2>Hi, I'm Grant.</h2>
+      {bio && <p class="bio">{bio}</p>}
+      {
+        links.length > 0 && (
+          <ul class="links">
+            {
+              links.map((link) => (
+                <li>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    border-top: 1px solid var(--site-rule);
+  }
+
+  .about__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 32px 48px;
+    padding-block: clamp(56px, 8vw, 96px);
+  }
+
+  .photo {
+    flex: 0 0 auto;
+    width: 160px;
+    height: 160px;
+    border-radius: 999px;
+    object-fit: cover;
+    background: var(--site-media);
+  }
+
+  .about__text {
+    flex: 1 1 480px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(28px, 5vw, 36px);
+  }
+
+  .bio {
+    margin: 0;
+    max-width: 680px;
+    font-size: 20px;
+    color: var(--site-text-quiet);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 600;
+  }
+</style>
