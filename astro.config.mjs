@@ -5,4 +5,6 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://walkingkangaroo.com',
   output: 'static',
+  // Code blocks in posts use the brand colours from src/styles/prose.css, not a highlighter theme.
+  markdown: { syntaxHighlight: false },
 });
