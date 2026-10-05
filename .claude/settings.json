@@ -1,0 +1,40 @@
+{
+  "model": "opus",
+  "effortLevel": "high",
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh pr *)",
+      "Bash(gh run *)",
+      "Bash(gh repo view *)",
+      "Bash(bash .claude/scripts/*)"
+    ],
+    "deny": [
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push --force-with-lease *)",
+      "Bash(git push origin main)",
+      "Bash(git push origin main *)",
+      "Bash(git push origin HEAD:main *)",
+      "Bash(git push origin master)",
+      "Bash(git push origin master *)",
+      "Bash(git push origin HEAD:master *)",
+      "Bash(git reset --hard *)",
+      "Bash(gh pr merge *)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/scripts/cleanup-merged-branches.sh\" 2>/dev/null || true",
+            "timeout": 60,
+            "statusMessage": "Cleaning up merged branches"
+          }
+        ]
+      }
+    ]
+  }
+}
