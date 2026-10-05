@@ -1,6 +1,6 @@
 # Decision round: build the site
 
-Status: Waiting on Grant
+Status: Answered
 Opened: 2026-10-05
 Issue: https://linear.app/walkingkangaroo/issue/KAN-726/shape-build-the-site
 Research: [docs/research/build-the-site.md](../research/build-the-site.md)
@@ -21,7 +21,7 @@ Say "use the defaults" to take every default below.
   describe.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** default taken (A). Grant, 2026-10-05: "use the defaults".
 
 ### 2. How should the empty footprints in the stage meter be drawn?
 
@@ -39,7 +39,7 @@ never to outline or recolour the mark.
   adding a colour.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** default taken (A). Grant, 2026-10-05: "use the defaults".
 
 ### 3. Can the site use the design's seven Paper and Ink tints alongside the four brand colours?
 
@@ -53,7 +53,7 @@ text) and `#6B5646`. All the text pairs pass 4.5:1.
   them, and they are blends of Paper and Ink rather than new hues.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** default taken (A). Grant, 2026-10-05: "use the defaults".
 
 ### 4. Should the site be published to the github.io address while it's being built, or only at launch?
 
@@ -67,7 +67,7 @@ text) and `#6B5646`. All the text pairs pass 4.5:1.
   and the deploy is easier to test once, with the real domain.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** default taken (A). Grant, 2026-10-05: "use the defaults".
 
 ### 5. How much of the project page board should be built now?
 
@@ -84,7 +84,7 @@ list, and "Target" and "Last update" lines.
   and the optional fields cost one line each in a project file.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** default taken (A). Grant, 2026-10-05: "use the defaults".
 
 ### 6. On a phone, should the header's links wrap under the logo, or fold into a menu button?
 
@@ -99,7 +99,7 @@ menu button.
   script.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** default taken (A). Grant, 2026-10-05: "use the defaults".
 
 ## Decided without asking
 
@@ -133,24 +133,30 @@ menu button.
 
 - RSS feed for the devlog: Backlog.
 - Sitemap (it needs the final domain): Backlog, for the Launch step.
-- Playtest sign-up ("Join the playtest", "Want to help?"): Backlog, if question 5 is A.
-- The GitHub Pages workflow and `CNAME`: Backlog, for the Launch step, if question 4 is A.
+- Playtest sign-up ("Join the playtest", "Want to help?"): Backlog.
+- The GitHub Pages workflow and `CNAME`: Backlog, for the Launch step.
 - Press kit, release pages and Steam wishlist buttons: already "Later" in the brief.
 
 ## Outcome
 
-Filled in when the answers are recorded.
+Recorded 2026-10-05. Grant took every default.
 
-- Decisions: <links to the decision records>
-- Spec or design changes: <files>
-- Issues: <full Linear URLs, in build order>
-
-Planned slices, to be written once the answers are in:
-
-1. Scaffold: Astro, pnpm, Node pin, base layout, tokens, fonts, favicons, header and footer.
-2. Content collections and the footprint stage meter.
-3. Home page.
-4. Project pages.
-5. Devlog list and post pages.
-6. About and not-found pages.
-7. Only if question 4 is B: the GitHub Pages deploy workflow.
+- Decisions: [0008](../decisions/0008-astro-7-on-node-24.md),
+  [0009](../decisions/0009-stage-meter-solid-footprints.md),
+  [0010](../decisions/0010-site-tints.md), [0011](../decisions/0011-publish-at-launch.md),
+  [0012](../decisions/0012-project-page-scope.md),
+  [0013](../decisions/0013-phone-header-wraps.md)
+- Spec or design changes: `docs/brief.md` (stage meter, step 2, step 5), `CLAUDE.md` (Node,
+  site tints), `docs/process/review-checklist.md` (colours), `docs/DECISIONS.md`
+- Issues, milestone Build the site, in build order:
+  1. https://linear.app/walkingkangaroo/issue/KAN-727/the-site-runs-locally-with-the-brands-look-header-and-footer
+  2. https://linear.app/walkingkangaroo/issue/KAN-728/each-project-is-one-content-file-shown-with-the-footprint-stage-meter
+  3. https://linear.app/walkingkangaroo/issue/KAN-729/the-home-page-shows-the-featured-project-everything-in-the-works-and
+  4. https://linear.app/walkingkangaroo/issue/KAN-731/the-devlog-has-a-list-of-posts-and-a-page-for-each-post
+  5. https://linear.app/walkingkangaroo/issue/KAN-730/each-project-has-its-own-page-with-its-stage-clip-and-devlog
+  6. https://linear.app/walkingkangaroo/issue/KAN-732/the-site-has-an-about-page-and-a-not-found-page (can run beside 4 and 5)
+- Held out to Backlog:
+  - https://linear.app/walkingkangaroo/issue/KAN-733/publish-the-site-to-github-pages-at-walkingkangaroocom
+  - https://linear.app/walkingkangaroo/issue/KAN-734/add-a-sitemap
+  - https://linear.app/walkingkangaroo/issue/KAN-735/add-an-rss-feed-for-the-devlog
+  - https://linear.app/walkingkangaroo/issue/KAN-736/let-visitors-sign-up-to-playtest-a-project

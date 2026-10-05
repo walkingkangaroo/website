@@ -14,7 +14,7 @@ load only when those files are touched. History goes in decision records, not he
 
 ## Commands
 
-Set up by the first build issue. Expected:
+Set up by the first build issue. Node 24 LTS (`.nvmrc`), [0008](docs/decisions/0008-astro-7-on-node-24.md). Expected:
 
 ```bash
 pnpm install
@@ -35,6 +35,7 @@ pnpm dev        # local preview
   copied in unchanged. Never redraw, recolour or re-letter the logo.
 - Colours: Rust `#9E3B22`, Ink `#2B1A12`, Paper `#F4EBDD`, Rust Light `#E0785A` (on Ink only).
   Rust on Ink and Rust Light on Paper fail contrast: never for text.
+  Seven site tints sit beside them, and no other colours: [0010](docs/decisions/0010-site-tints.md).
 - Type: Outfit, SemiBold 600 for headings (sentence case, -2.5% tracking at 48 px and up),
   Regular 400 for body.
 - The repo is public: no secrets, keys or unpublished plans for other projects.

@@ -6,7 +6,8 @@ which issue taught it.
 
 ## Correctness in this project
 
-- Colours and type match the brand tokens; no invented colours, no Rust text on Ink.
+- Colours and type match the brand tokens and the site tints in decision 0010; no other
+  colours, no Rust text on Ink.
 - Every page works at 390 px wide with no horizontal scroll.
 - Images have `alt` text (empty `alt=""` for decorative footprints); links and buttons are real
   `<a>` and `<button>` elements.

@@ -15,6 +15,10 @@ row below in the same pull request. To change one: write a new record and mark t
 | [0001](decisions/0001-b2-daylight-design.md) | The site follows direction B2 · Daylight, built from the brand pack | Accepted |
 | [0002](decisions/0002-projects-shown.md) | The site shows five projects, all in progress | Accepted |
 | [0006](decisions/0006-kit-newsletter.md) | Kit's free plan for the newsletter | Accepted |
+| [0009](decisions/0009-stage-meter-solid-footprints.md) | The stage meter uses one solid foot, faded for steps not reached | Accepted |
+| [0010](decisions/0010-site-tints.md) | The site uses seven Paper and Ink tints alongside the brand colours | Accepted |
+| [0012](decisions/0012-project-page-scope.md) | Project pages leave out the playtest parts until there is a playtest | Accepted |
+| [0013](decisions/0013-phone-header-wraps.md) | On a phone the header links wrap under the logo, with no menu button | Accepted |
 
 ## Platform, code and process
 
@@ -24,6 +28,8 @@ row below in the same pull request. To change one: write a new record and mark t
 | [0004](decisions/0004-github-pages-public-repo.md) | Public repo, published to GitHub Pages on merge | Accepted |
 | [0005](decisions/0005-dns-stays-at-ventraip.md) | DNS stays at VentraIP, and email records are never touched | Accepted |
 | [0007](decisions/0007-adopt-process-template.md) | Work through process-template 1.0.1 | Accepted |
+| [0008](decisions/0008-astro-7-on-node-24.md) | Astro 7 on Node 24 LTS | Accepted |
+| [0011](decisions/0011-publish-at-launch.md) | The site is first published at launch, not while it's built | Accepted |
 
 ## Open questions
 
