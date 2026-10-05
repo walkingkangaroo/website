@@ -21,7 +21,8 @@ except the project page, which is the template for project pages).
 - Home: header; a featured project hero with a footprint trail; "Also in the works" cards; the
   "Five steps to launch" strip; devlog; about; newsletter band; footer.
 - **The footprint stage meter**: five prints for Idea, Prototype, Alpha, Beta, Launch. Filled
-  prints show how far a project has come. Always paired with the stage name in text.
+  prints show how far a project has come; steps not reached are the same foot, faded (0009).
+  Always paired with the stage name in text.
 - Works at phone width.
 
 ## What it shows
@@ -43,12 +44,14 @@ Studios' 2017 game; Grant has confirmed it is cleared to show.
 2. **Build the site** to the design: Astro, pages for home, each project, devlog list and posts,
    about, and not found. Each project is one content file (type, stage, platforms, one-liner,
    media), so updating a stage or adding a post is a one-file change.
+   Astro 7 on Node 24 (0008). Run and checked locally only; nothing is published until launch
+   (0011). Shaped in [rounds/build-the-site.md](rounds/build-the-site.md).
 3. **Content**: per project a one-liner, stage, platforms, cover art and one gameplay clip
    (Godot Movie Maker for the games, dev-server screenshots for PanePilot), and one devlog post
    each at launch. Grant supplies any cover art he has, his photo and a short bio.
 4. **Newsletter**: Kit's free plan, its form embedded; Kit's sending records and an SPF record
    added at VentraIP.
-5. **Launch**: GitHub Pages; Grant adds the apex and www records at VentraIP; check HTTPS, link
+5. **Launch**: the GitHub Pages workflow and `CNAME` (0011); Grant adds the apex and www records at VentraIP; check HTTPS, link
    previews and the phone layout.
 
 Later: release pages (the "Released product page" board), Steam wishlist buttons once store
