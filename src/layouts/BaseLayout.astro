@@ -9,10 +9,16 @@ interface Props {
   description: string;
   /** Share image: a path on this site or an absolute URL. Defaults to the brand link preview. */
   image?: string;
+  /**
+   * Keep the page out of search results. Also leaves out the canonical link and the og/twitter
+   * tags: the 404 page is served at every missing address, so a URL or share card would name
+   * the wrong page.
+   */
+  noindex?: boolean;
 }
 
 const SITE_NAME = 'Walking Kangaroo';
-const { title, description, image = '/og-default.png' } = Astro.props;
+const { title, description, image = '/og-default.png', noindex = false } = Astro.props;
 
 const fullTitle = title === SITE_NAME ? SITE_NAME : `${title} · ${SITE_NAME}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -26,7 +32,8 @@ const imageUrl = new URL(image, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && <link rel="canonical" href={canonical} />}
 
     <link rel="stylesheet" href="/fonts/walking-kangaroo-outfit.css" />
 
@@ -36,17 +43,23 @@ const imageUrl = new URL(image, Astro.site);
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#9E3B22" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={SITE_NAME} />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={imageUrl} />
-    <meta property="og:locale" content="en_AU" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={imageUrl} />
+    {
+      !noindex && (
+        <>
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content={SITE_NAME} />
+          <meta property="og:title" content={fullTitle} />
+          <meta property="og:description" content={description} />
+          <meta property="og:url" content={canonical} />
+          <meta property="og:image" content={imageUrl} />
+          <meta property="og:locale" content="en_AU" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={fullTitle} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:image" content={imageUrl} />
+        </>
+      )
+    }
   </head>
   <body>
     <SiteHeader />
