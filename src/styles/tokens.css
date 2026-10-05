@@ -1,0 +1,20 @@
+/* Brand tokens: copied from the brand pack's colour/walking-kangaroo-tokens.css.
+   Rust on Ink and Rust Light on Paper fail contrast: never use them for text. */
+:root {
+  --wk-rust: #9E3B22; /* Footprints. The signature colour. */
+  --wk-ink: #2B1A12; /* Lettering, text and dark backgrounds. */
+  --wk-paper: #F4EBDD; /* Light backgrounds. */
+  --wk-rust-light: #E0785A; /* Footprints on dark backgrounds only. */
+  --wk-font: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Site tints (decision 0010). Not brand colours: nothing outside this site uses them. */
+:root {
+  --site-media: #E6D8C2; /* media panels */
+  --site-panel: #EFE3D0; /* steps strip and side panels */
+  --site-progress: #FBF6EE; /* progress panel */
+  --site-progress-border: #DCCDB6; /* progress panel border */
+  --site-rule: #CDBBA0; /* rules */
+  --site-text-quiet: #4A362B; /* secondary text, 9.6:1 on Paper */
+  --site-text-on-media: #6B5646; /* quiet text on --site-media, 4.9:1 */
+}

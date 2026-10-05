@@ -1,9 +1,8 @@
 # walkingkangaroo.com
 
 The Walking Kangaroo website: Grant's games and apps, how far along each one is, and a devlog.
-A static Astro site published to GitHub Pages. On 2026-10-05 the repo holds the brief, the
-decisions and the process template; the site itself is not built yet. Start with
-[docs/brief.md](docs/brief.md).
+A static Astro site, published to GitHub Pages from launch (0011); until then it runs locally.
+Start with [docs/brief.md](docs/brief.md).
 
 **Decisions and their reasons: [docs/DECISIONS.md](docs/DECISIONS.md).** Don't reopen an Accepted
 decision without Grant. The roadmap and issues live in the Linear project **Website**.
@@ -14,13 +13,14 @@ load only when those files are touched. History goes in decision records, not he
 
 ## Commands
 
-Set up by the first build issue. Node 24 LTS (`.nvmrc`), [0008](docs/decisions/0008-astro-7-on-node-24.md). Expected:
+Node 24 LTS (`.nvmrc`), [0008](docs/decisions/0008-astro-7-on-node-24.md). pnpm 12 through
+corepack (`packageManager` in `package.json`).
 
 ```bash
 pnpm install
 pnpm build      # astro build into dist/
 pnpm check      # astro check
-pnpm dev        # local preview
+pnpm dev        # local preview on http://localhost:4321
 ```
 
 ## Layout

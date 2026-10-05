@@ -20,7 +20,6 @@ never edited here.
 ## What green means
 
 Run by the orchestrator, by the implementer before it reports, and by the reviewer if it wants.
-Until the first build issue sets up the site, there is nothing to run.
 
 1. `pnpm build`: completes with no errors.
 2. `pnpm check`: 0 errors, 0 warnings.

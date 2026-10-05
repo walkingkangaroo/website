@@ -1,0 +1,92 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--wk-paper);
+  color: var(--wk-ink);
+  font-family: var(--wk-font);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/* Content width, as on the board. Use on any block that should sit in the page column. */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-inline: clamp(16px, 4vw, 40px);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+}
+
+h1 {
+  font-size: 2.25rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+/* Tracking -2.5% on headings at 48 px and up. Any heading set at 48 px or more needs it. */
+@media (min-width: 48rem) {
+  h1 {
+    font-size: 3.5rem;
+    letter-spacing: -0.025em;
+  }
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+/* Only Outfit 400 and 600 are shipped, so bold text uses SemiBold rather than a missing 700. */
+b,
+strong {
+  font-weight: 600;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: var(--wk-rust);
+}
+
+a:hover {
+  color: var(--wk-ink);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--wk-ink);
+  outline-offset: 3px;
+}
