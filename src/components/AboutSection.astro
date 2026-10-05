@@ -2,6 +2,12 @@
 import { Image } from 'astro:assets';
 import { site } from '../data/site';
 
+interface Props {
+  /** The page's only h1 on /about/; the home page keeps the default h2. */
+  headingLevel?: 'h1' | 'h2';
+}
+
+const { headingLevel: Heading = 'h2' } = Astro.props;
 const { bio, photo, links } = site;
 ---
 
@@ -13,7 +19,7 @@ const { bio, photo, links } = site;
       )
     }
     <div class="about__text">
-      <h2>Hi, I'm Grant.</h2>
+      <Heading class="about__title">Hi, I'm Grant.</Heading>
       {bio && <p class="bio">{bio}</p>}
       {
         links.length > 0 && (
@@ -62,9 +68,11 @@ const { bio, photo, links } = site;
     gap: 16px;
   }
 
-  h2 {
+  .about__title {
     margin: 0;
     font-size: clamp(28px, 5vw, 36px);
+    /* Global h1 adds tracking at 48 px and up; keep the h1 identical to the h2. */
+    letter-spacing: normal;
   }
 
   .bio {
