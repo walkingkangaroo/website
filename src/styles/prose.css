@@ -1,0 +1,126 @@
+/* Long-form Markdown: devlog posts and project descriptions. Wrap the rendered body in
+   <div class="prose">. Colours come from the tokens only. The reading measure is 68ch,
+   set on .prose itself, so any page can drop it into a wider column. */
+.prose {
+  max-width: 68ch;
+  overflow-wrap: break-word;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose > :last-child {
+  margin-bottom: 0;
+}
+
+/* Headings. The page's own title is the h1, so a body starts at h2. */
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin: 1.8em 0 0.5em;
+  line-height: 1.2;
+}
+
+.prose h2 {
+  font-size: 1.75rem;
+}
+
+.prose h3 {
+  font-size: 1.3rem;
+}
+
+.prose h4 {
+  font-size: 1.0625rem;
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose pre,
+.prose figure {
+  margin: 0 0 1.25em;
+}
+
+/* Lists */
+.prose ul,
+.prose ol {
+  padding-left: 1.5em;
+}
+
+.prose li {
+  margin: 0.35em 0;
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin: 0.35em 0 0;
+}
+
+.prose li::marker {
+  color: var(--wk-ink);
+}
+
+/* Links: the global Rust link colour, underlined so they read as links inside running text. */
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Images */
+.prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  padding: 0.1em 0 0.1em 1.25em;
+  border-left: 4px solid var(--wk-rust);
+  color: var(--site-text-quiet);
+}
+
+.prose blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.prose hr {
+  margin: 2em 0;
+  border: 0;
+  border-top: 1px solid var(--site-rule);
+}
+
+/* Code: inline on a panel tint, blocks as Paper on Ink. A block scrolls inside its own box. */
+.prose code {
+  padding: 0.12em 0.35em;
+  border-radius: 6px;
+  background: var(--site-panel);
+  color: var(--wk-ink);
+  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1em 1.25em;
+  border-radius: 14px;
+  background: var(--wk-ink);
+  color: var(--wk-paper);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  tab-size: 2;
+}
+
+.prose pre code {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}

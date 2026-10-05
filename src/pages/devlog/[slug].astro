@@ -1,0 +1,104 @@
+---
+import { getEntry, render } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MediaPanel from '../../components/MediaPanel.astro';
+import { getPublishedPosts, type Post } from '../../lib/content';
+import '../../styles/prose.css';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, date, project: projectRef, summary, cover } = post.data;
+const project = projectRef ? await getEntry(projectRef) : undefined;
+const { Content } = await render(post);
+
+// "5 October 2026". Posts are dated by day, parsed as midnight UTC, so format in UTC too.
+const dateText = new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
+const dateIso = date.toISOString().slice(0, 10);
+
+// The share image is the cover at 1200 px wide; BaseLayout makes the path absolute.
+const shareImage = cover ? (await getImage({ src: cover, width: 1200, format: 'jpg' })).src : undefined;
+---
+
+<BaseLayout title={title} description={summary} image={shareImage}>
+  <article class="container page">
+    <div class="column">
+      <header>
+        <p class="meta">
+          <time datetime={dateIso}>{dateText}</time>
+          {
+            project && (
+              <>
+                {' · '}
+                <a class="project" href={`/projects/${project.id}/`}>
+                  {project.data.name}
+                </a>
+              </>
+            )
+          }
+        </p>
+        <h1>{title}</h1>
+      </header>
+
+      {
+        cover && (
+          <div class="cover">
+            {/* The schema has no alt text for covers, and the title sits right above. */}
+            <MediaPanel image={cover} aspect="16 / 9" alt="" radius="14px" sizes="(min-width: 880px) 832px, 100vw" />
+          </div>
+        )
+      }
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <p class="back"><a href="/devlog/">← All posts</a></p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-top: clamp(40px, 6vw, 72px);
+    padding-bottom: clamp(56px, 8vw, 96px);
+  }
+
+  /* The header and cover share a 52rem column; the text inside it (.prose) is held to 68ch. */
+  .column {
+    max-width: 52rem;
+    margin: 0 auto;
+  }
+
+  .meta {
+    margin: 0 0 0.75em;
+    font-size: 15px;
+    color: var(--site-text-quiet);
+  }
+
+  .project {
+    font-weight: 600;
+  }
+
+  h1 {
+    margin: 0 0 0.6em;
+    overflow-wrap: break-word;
+  }
+
+  .cover {
+    margin-bottom: 2rem;
+  }
+
+  .back {
+    margin: 3rem 0 0;
+    font-weight: 600;
+  }
+</style>
