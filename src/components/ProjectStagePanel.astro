@@ -1,0 +1,80 @@
+---
+import StageMeter from './StageMeter.astro';
+import { STAGE_COUNT, stageName } from '../lib/content';
+
+interface Props {
+  /** 1 Idea, 2 Prototype, 3 Alpha, 4 Beta, 5 Launch. */
+  stage: number;
+  /** For example "2027". Shown as "Target: 2027" when set. */
+  target?: string;
+  platforms?: string[];
+  /** The date of the project's newest published post. Left out when there is none. */
+  lastUpdate?: Date;
+}
+
+const { stage, target, platforms = [], lastUpdate } = Astro.props;
+
+// "Target: 2027 · Windows", or just "Windows", or just "Target: 2027"; no line when neither is set.
+const plan = [target ? `Target: ${target}` : undefined, platforms.length ? platforms.join(', ') : undefined]
+  .filter(Boolean)
+  .join(' · ');
+
+// "5 October 2026". Posts are dated by day, parsed as midnight UTC, so format in UTC too.
+const lastUpdateText = lastUpdate
+  ? new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(lastUpdate)
+  : undefined;
+const lastUpdateIso = lastUpdate?.toISOString().slice(0, 10);
+---
+
+<section class="panel" aria-label="Progress">
+  <div class="meter">
+    <StageMeter stage={stage} size="lg" label="steps" />
+  </div>
+  <div class="facts">
+    <span class="stage">{stageName(stage)} · step {stage} of {STAGE_COUNT}</span>
+    {plan && <span class="line">{plan}</span>}
+    {
+      lastUpdateText && (
+        <span class="line">
+          Last update: <time datetime={lastUpdateIso}>{lastUpdateText}</time>
+        </span>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px 48px;
+    padding: 28px clamp(20px, 3vw, 36px);
+    background: var(--site-progress);
+    border: 1px solid var(--site-progress-border);
+    border-radius: 20px;
+  }
+
+  .meter {
+    flex: 1 1 560px;
+    min-width: 0;
+  }
+
+  .facts {
+    flex: 1 1 260px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 15px;
+  }
+
+  .stage {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .line {
+    color: var(--site-text-quiet);
+  }
+</style>

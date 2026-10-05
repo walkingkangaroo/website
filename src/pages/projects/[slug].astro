@@ -1,0 +1,196 @@
+---
+import { render } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MediaPanel from '../../components/MediaPanel.astro';
+import ProjectStagePanel from '../../components/ProjectStagePanel.astro';
+import ProjectDevlog from '../../components/ProjectDevlog.astro';
+import WorkingOn from '../../components/WorkingOn.astro';
+import { getProjects, getPublishedPosts, type Project } from '../../lib/content';
+import '../../styles/prose.css';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { name, oneLiner, stage, platforms, target, cover, clip, workingOn } = project.data;
+
+// Newest first, so the first post is the latest update. In dev this includes drafts.
+const posts = await getPublishedPosts(project);
+const lastUpdate = posts[0]?.data.date;
+
+// The Markdown body is optional: render it only when the file has one.
+const hasBody = Boolean(project.body?.trim());
+const { Content } = await render(project);
+
+// The share image is the cover at 1200 px wide; BaseLayout makes the path absolute and falls back to the default.
+const shareImage = cover ? (await getImage({ src: cover, width: 1200, format: 'jpg' })).src : undefined;
+
+const hasSidebar = Boolean(workingOn?.length);
+const hasLower = posts.length > 0 || hasSidebar;
+---
+
+<BaseLayout title={name} description={oneLiner} image={shareImage}>
+  <div class="container page">
+    <div class="top">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/#games">In the works</a>{' '}
+        <span class="here"><span aria-hidden="true">/ </span>{name}</span>
+      </nav>
+
+      <div class="intro">
+        <div class="intro__text">
+          <h1>{name}</h1>
+          <p class="one-liner">{oneLiner}</p>
+        </div>
+        <div class="actions">
+          <a class="follow" href="/#news">Follow this project</a>
+        </div>
+      </div>
+
+      {
+        hasBody && (
+          <div class="prose">
+            <Content />
+          </div>
+        )
+      }
+
+      <ProjectStagePanel stage={stage} target={target} platforms={platforms} lastUpdate={lastUpdate} />
+    </div>
+
+    {/* The cover is the poster for a clip; with neither, this is the plain tint panel. */}
+    <MediaPanel
+      image={cover}
+      clip={clip}
+      poster={cover}
+      controls
+      aspect="16 / 7"
+      alt=""
+      radius="20px"
+      sizes="(min-width: 1280px) 1200px, 100vw"
+    />
+
+    {
+      hasLower && (
+        <div class:list={['lower', { 'lower--solo': posts.length === 0 }]}>
+          {
+            posts.length > 0 && (
+              <div class="main">
+                <ProjectDevlog posts={posts} />
+              </div>
+            )
+          }
+          {
+            hasSidebar && (
+              <aside class="aside">
+                <WorkingOn items={workingOn} />
+              </aside>
+            )
+          }
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 6vw, 64px);
+    padding-top: 16px;
+    padding-bottom: clamp(56px, 8vw, 96px);
+  }
+
+  .top {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .breadcrumb {
+    font-size: 15px;
+  }
+
+  .here {
+    color: var(--site-text-quiet);
+  }
+
+  .intro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 40px;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .intro__text {
+    flex: 1 1 520px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    overflow-wrap: break-word;
+  }
+
+  .one-liner {
+    margin: 0;
+    max-width: 560px;
+    font-size: 20px;
+    color: var(--site-text-quiet);
+  }
+
+  .follow {
+    display: inline-block;
+    padding: 14px 22px;
+    border-radius: 999px;
+    background: var(--wk-ink);
+    color: var(--wk-paper);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .follow:hover {
+    background: var(--wk-rust);
+    color: var(--wk-paper);
+  }
+
+  /* The board's flex-wrap layout: the main column wants 560 px, the sidebar 300 px, and the gap is
+     64 px, so the sidebar drops below the devlog when the container is narrower than 924 px.
+     Without a sidebar the main column grows to the full width. */
+  .lower {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 64px;
+    align-items: flex-start;
+  }
+
+  .main {
+    flex: 999 1 560px;
+    min-width: 0;
+  }
+
+  .aside {
+    flex: 1 1 300px;
+    min-width: 0;
+  }
+
+  /* A sidebar with no devlog beside it keeps its sidebar width, on the left. */
+  .lower--solo .aside {
+    flex: 0 1 360px;
+  }
+</style>
