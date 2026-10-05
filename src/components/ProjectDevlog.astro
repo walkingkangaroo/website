@@ -1,0 +1,123 @@
+---
+import MediaPanel from './MediaPanel.astro';
+import footprint from '../assets/footprint.svg';
+import type { Post } from '../lib/content';
+
+interface Props {
+  /** The project's published posts, newest first. Renders nothing when empty. */
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+
+// "5 October 2026". Posts are dated by day, parsed as midnight UTC, so format in UTC too.
+const formatter = new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+---
+
+{
+  posts.length > 0 && (
+    <section class="devlog">
+      <h2>Devlog</h2>
+      {posts.map((post, i) => (
+        <article class:list={['entry', { 'entry--shifted': i % 2 === 1 }]}>
+          <div class="marker">
+            <img src={footprint.src} alt="" width="26" height="31" />
+          </div>
+          <div class="body">
+            <time class="date" datetime={post.data.date.toISOString().slice(0, 10)}>
+              {formatter.format(post.data.date)}
+            </time>
+            <h3>
+              <a href={`/devlog/${post.id}/`}>{post.data.title}</a>
+            </h3>
+            <p class="summary">{post.data.summary}</p>
+            {post.data.cover && (
+              <div class="cover">
+                {/* The title sits right above, so the cover needs no alt text of its own. */}
+                <MediaPanel image={post.data.cover} aspect="16 / 9" alt="" radius="14px" sizes="(min-width: 600px) 520px, 100vw" />
+              </div>
+            )}
+          </div>
+        </article>
+      ))}
+    </section>
+  )
+}
+
+<style>
+  .devlog {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  h2 {
+    margin: 0 0 20px;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+  }
+
+  .entry {
+    display: flex;
+    gap: 24px;
+  }
+
+  .marker {
+    flex: 0 0 48px;
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .entry--shifted .marker {
+    padding-left: 18px;
+  }
+
+  .marker img {
+    display: block;
+    width: 26px;
+    height: 31px;
+    margin-top: 6px;
+  }
+
+  .body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 36px;
+  }
+
+  .date {
+    font-size: 14px;
+    color: var(--site-text-quiet);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.25;
+    overflow-wrap: break-word;
+  }
+
+  h3 a {
+    color: var(--wk-ink);
+    text-decoration: none;
+  }
+
+  h3 a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .summary {
+    margin: 0;
+    color: var(--site-text-quiet);
+  }
+
+  .cover {
+    max-width: 520px;
+  }
+</style>
