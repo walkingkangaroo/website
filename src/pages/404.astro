@@ -1,46 +1,14 @@
 ---
-import '../styles/global.css';
-import SiteHeader from '../components/SiteHeader.astro';
-import SiteFooter from '../components/SiteFooter.astro';
-
-/*
- * This page writes its own document instead of using BaseLayout: BaseLayout has no slot for extra
- * <head> tags, and the noindex meta has to be in the head. Keep the head below in step with
- * BaseLayout. GitHub Pages serves this file for any missing address, so it has no canonical or
- * share tags (they would name the wrong URL).
- */
-const title = 'Page not found · Walking Kangaroo';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<!doctype html>
-<html lang="en-AU">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content="There's nothing at this address." />
-    <meta name="robots" content="noindex" />
-
-    <link rel="stylesheet" href="/fonts/walking-kangaroo-outfit.css" />
-
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#9E3B22" />
-  </head>
-  <body>
-    <SiteHeader />
-    <main>
-      <div class="container page">
-        <h1>Page not found</h1>
-        <p>There's nothing at this address.</p>
-        <a class="home" href="/">Back to the home page</a>
-      </div>
-    </main>
-    <SiteFooter />
-  </body>
-</html>
+<BaseLayout title="Page not found" description="There's nothing at this address." noindex>
+  <div class="container page">
+    <h1>Page not found</h1>
+    <p>There's nothing at this address.</p>
+    <a class="home" href="/">Back to the home page</a>
+  </div>
+</BaseLayout>
 
 <style>
   .page {
