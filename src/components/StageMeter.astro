@@ -1,0 +1,124 @@
+---
+import footprint from '../assets/footprint.svg';
+import { STAGE_COUNT, STAGE_NAMES, stageName } from '../lib/content';
+
+interface Props {
+  /** 1 Idea, 2 Prototype, 3 Alpha, 4 Beta, 5 Launch. */
+  stage: number;
+  /** One print is sm 20x24 px, md 26x31 px or lg 40x48 px. */
+  size?: 'sm' | 'md' | 'lg';
+  /**
+   * short: "Prototype". long: "Prototype · step 2 of 5".
+   * steps: every print with its stage name beneath (the project page's progress panel).
+   */
+  label?: 'short' | 'long' | 'steps';
+}
+
+const { stage, size = 'md', label = 'short' } = Astro.props;
+const name = stageName(stage);
+const steps = STAGE_NAMES.map((stepName, i) => ({ stepName, reached: i < stage, current: i === stage - 1 }));
+---
+
+{
+  label === 'steps' ? (
+    <ol class={`stage-meter stage-meter--steps stage-meter--${size}`}>
+      {steps.map((step, i) => (
+        <li class:list={['step', { 'step--up': i % 2 === 0, 'step--current': step.current }]} aria-current={step.current ? 'step' : undefined}>
+          <span class="prints" aria-hidden="true">
+            <img class:list={['print', { 'print--faded': !step.reached }]} src={footprint.src} alt="" width={footprint.width} height={footprint.height} />
+          </span>
+          <span class="step-name">{step.stepName}</span>
+        </li>
+      ))}
+    </ol>
+  ) : (
+    <div class={`stage-meter stage-meter--${size}`}>
+      <span class="prints" aria-hidden="true">
+        {steps.map((step, i) => (
+          <img class:list={['print', { 'print--up': i % 2 === 0, 'print--faded': !step.reached }]} src={footprint.src} alt="" width={footprint.width} height={footprint.height} />
+        ))}
+      </span>
+      <span class="label">{label === 'long' ? `${name} · step ${stage} of ${STAGE_COUNT}` : name}</span>
+    </div>
+  )
+}
+
+<style>
+  /* Print sizes and the offset of the alternating prints (about a third of the print's height). */
+  .stage-meter--sm { --print-w: 20px; --print-h: 24px; --gap: 4px; --shift: 8px; --text: 14px; }
+  .stage-meter--md { --print-w: 26px; --print-h: 31px; --gap: 6px; --shift: 10px; --text: 15px; }
+  .stage-meter--lg { --print-w: 40px; --print-h: 48px; --gap: 6px; --shift: 14px; --text: 14px; }
+
+  .stage-meter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text);
+    line-height: 1.3;
+    max-width: 100%;
+  }
+
+  .prints {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--gap);
+  }
+
+  .print {
+    display: block;
+    width: var(--print-w);
+    height: var(--print-h);
+  }
+
+  .print--faded {
+    opacity: 0.2;
+  }
+
+  /* Row meters: the first, third and fifth prints stand up; the others sit one offset lower. */
+  .prints > .print:not(.print--up) {
+    margin-top: var(--shift);
+  }
+
+  .label {
+    font-weight: 600;
+  }
+
+  /* Steps: a wrapping row of columns, each a print with its stage name beneath. */
+  .stage-meter--steps {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px 28px;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 84px;
+    text-align: center;
+  }
+
+  .step .prints {
+    display: block;
+    /* Room for the offset, so the names line up under every print. */
+    padding-top: var(--shift);
+  }
+
+  .step--up .prints {
+    padding-top: 0;
+    padding-bottom: var(--shift);
+  }
+
+  .step-name {
+    font-weight: 400;
+  }
+
+  .step--current .step-name {
+    font-weight: 600;
+  }
+</style>
