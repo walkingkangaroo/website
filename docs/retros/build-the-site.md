@@ -72,7 +72,7 @@ At most three. Each one is also a Process issue.
   need a dev server.
 - **How we'd know it worked:** at the next retro, no temporary edits to `.claude/launch.json` and
   no stalled visual check.
-- **Process issue:** _to be added_
+- **Process issue:** https://linear.app/walkingkangaroo/issue/KAN-741/walkingkangaroocom-do-says-how-to-look-at-the-result-when-a-dev-server
 
 ### 2. The orchestrator makes temporary content edits only while no subagent is running
 
@@ -87,7 +87,7 @@ At most three. Each one is also a Process issue.
 - **Risk:** the review loop runs slightly more serially. Reviews here took 0.5–8 minutes.
 - **How we'd know it worked:** no reviewer report names a file the orchestrator changed
   temporarily.
-- **Process issue:** _to be added_
+- **Process issue:** https://linear.app/walkingkangaroo/issue/KAN-742/walkingkangaroocom-the-orchestrator-makes-temporary-content-edits-only
 
 ### 3. /shape gives a setup issue a check that runs each pipeline the round decided on, once, with throwaway input
 
@@ -100,7 +100,7 @@ At most three. Each one is also a Process issue.
   follow-up issue, one PR and its review (about 5 minutes of work and 1 merge for Grant).
 - **Risk:** setup issues grow a little, by one throwaway check per decided pipeline.
 - **How we'd know it worked:** no bug at the next retro traced back to a setup assumption.
-- **Process issue:** _to be added_
+- **Process issue:** https://linear.app/walkingkangaroo/issue/KAN-743/walkingkangaroocom-shape-gives-a-setup-issue-a-check-that-runs-each
 
 ## Could not measure
 
