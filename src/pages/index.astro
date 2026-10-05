@@ -1,5 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import StageMeter from '../components/StageMeter.astro';
+import { getProjects } from '../lib/content';
+
+// Temporary check page: the home-page issue replaces it.
+const projects = await getProjects();
 ---
 
 <BaseLayout
@@ -8,5 +13,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 >
   <div class="container">
     <h1>Walking Kangaroo</h1>
+    <ul class="projects">
+      {
+        projects.map((project) => (
+          <li>
+            <h2>{project.data.name}</h2>
+            <p class="type">{project.data.type}</p>
+            <p>{project.data.oneLiner}</p>
+            <div class="meters">
+              <StageMeter stage={project.data.stage} size="sm" label="short" />
+              <StageMeter stage={project.data.stage} size="md" label="long" />
+              <StageMeter stage={project.data.stage} size="lg" label="steps" />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </BaseLayout>
+
+<style>
+  .projects {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .projects li {
+    padding: 24px 0;
+    border-top: 1px solid var(--site-rule);
+  }
+
+  .type {
+    color: var(--site-text-quiet);
+    margin: 0 0 0.5em;
+  }
+
+  .meters {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+</style>
