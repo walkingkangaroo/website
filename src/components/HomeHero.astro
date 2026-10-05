@@ -1,0 +1,231 @@
+---
+import MediaPanel from './MediaPanel.astro';
+import StageMeter from './StageMeter.astro';
+import type { Project } from '../lib/content';
+import markRust from '../assets/brand/walking-kangaroo-mark-rust.svg';
+
+interface Props {
+  /** The featured project. */
+  project: Project;
+}
+
+const { project } = Astro.props;
+const { name, oneLiner, stage, platforms, clip, cover } = project.data;
+
+const eyebrow = platforms.length ? `In development · ${platforms.join(' / ')}` : 'In development';
+const hasClip = Boolean(clip);
+
+// The footprint trail steps up and to the right. Offsets are from the trail's own box, whose top
+// right corner sits where the board puts the last print (136 px from the right, 72 px from the top).
+const trail = [
+  { right: 164, top: 228, opacity: 0.15 },
+  { right: 94, top: 133, opacity: 0.3 },
+  { right: 42, top: 60, opacity: 0.55 },
+  { right: 0, top: 0, opacity: 0.85 },
+];
+---
+
+<section id="top" class="container hero-section">
+  <div class="hero">
+    <div class="hero__stage">
+      <MediaPanel fill image={cover} clip={clip} poster={cover} alt="" sizes="(min-width: 1360px) 1280px, 100vw" />
+      <div class="trail" aria-hidden="true">
+        {
+          trail.map((step) => (
+            <img
+              class="trail__print"
+              src={markRust.src}
+              width={markRust.width}
+              height={markRust.height}
+              alt=""
+              style={{ right: `${step.right}px`, top: `${step.top}px`, opacity: step.opacity }}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="hero__text">
+      <span class="eyebrow">{eyebrow}</span>
+      <h1>{name}</h1>
+      <p class="one-liner">{oneLiner}</p>
+      <StageMeter stage={stage} size="md" label="long" detail={platforms.length ? platforms.join(', ') : undefined} />
+      <div class="actions">
+        <a class="btn btn--solid" href="/#news">Follow development</a>
+        {
+          hasClip ? (
+            <a class="btn btn--outline" href={`/projects/${project.id}/`}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 2.5v11l9-5.5z" />
+              </svg>
+              Watch the prototype
+            </a>
+          ) : (
+            <a class="btn btn--outline" href={`/projects/${project.id}/`}>
+              See the project
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding-top: 16px;
+  }
+
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 600px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--site-media);
+  }
+
+  /* On desktop the clip area is the whole panel, behind the text. */
+  .hero__stage {
+    position: absolute;
+    inset: 0;
+  }
+
+  .trail {
+    position: absolute;
+    right: 136px;
+    top: 72px;
+    width: 234px;
+    height: 279px;
+    pointer-events: none;
+  }
+
+  .trail__print {
+    position: absolute;
+    width: 70px;
+    height: auto;
+  }
+
+  .hero__text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    max-width: 660px;
+    padding: clamp(24px, 5vw, 56px);
+    background: var(--wk-paper);
+    border-top-right-radius: 24px;
+  }
+
+  .eyebrow {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--wk-rust);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(44px, 6vw, 80px);
+    line-height: 1;
+    overflow-wrap: anywhere;
+  }
+
+  /* Tracking of -2.5% once the heading is 48 px or more (6vw reaches 48 px at 800 px wide). */
+  @media (min-width: 800px) {
+    h1 {
+      letter-spacing: -0.025em;
+    }
+  }
+
+  .one-liner {
+    margin: 0;
+    font-size: 20px;
+    color: var(--site-text-quiet);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 6px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .btn--solid {
+    padding: 14px 22px;
+    background: var(--wk-ink);
+    color: var(--wk-paper);
+  }
+
+  .btn--solid:hover {
+    background: var(--wk-rust);
+    color: var(--wk-paper);
+  }
+
+  .btn--outline {
+    padding: 12px 20px;
+    border: 2px solid var(--wk-ink);
+    color: var(--wk-ink);
+  }
+
+  .btn--outline:hover {
+    background: var(--wk-ink);
+    color: var(--wk-paper);
+  }
+
+  /* Tablets: the panel covers the lower part of the clip area, so the trail shrinks to half size in
+     the free space above it. */
+  @media (min-width: 720px) and (max-width: 1023px) {
+    .trail {
+      right: 24px;
+      top: 24px;
+      transform: scale(0.5);
+      transform-origin: top right;
+    }
+  }
+
+  /* Phones: the clip area is a 16:9 block above the text, which spans the full width. The trail
+     shrinks to half size in the clip area's top right corner. */
+  @media (max-width: 719px) {
+    .hero {
+      display: block;
+      min-height: 0;
+    }
+
+    .hero__stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+    }
+
+    .trail {
+      right: 12px;
+      top: 12px;
+      transform: scale(0.5);
+      transform-origin: top right;
+    }
+
+    .hero__text {
+      max-width: none;
+      border-top-right-radius: 0;
+    }
+
+    .actions {
+      width: 100%;
+    }
+  }
+</style>

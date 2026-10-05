@@ -12,9 +12,11 @@ interface Props {
    * steps: every print with its stage name beneath (the project page's progress panel).
    */
   label?: 'short' | 'long' | 'steps';
+  /** Quiet text after the label of a row meter, shown as " · {detail}" (for example the platforms). */
+  detail?: string;
 }
 
-const { stage, size = 'md', label = 'short' } = Astro.props;
+const { stage, size = 'md', label = 'short', detail } = Astro.props;
 const name = stageName(stage);
 const steps = STAGE_NAMES.map((stepName, i) => ({ stepName, reached: i < stage, current: i === stage - 1 }));
 ---
@@ -38,7 +40,10 @@ const steps = STAGE_NAMES.map((stepName, i) => ({ stepName, reached: i < stage, 
           <img class:list={['print', { 'print--up': i % 2 === 0, 'print--faded': !step.reached }]} src={footprint.src} alt="" width={footprint.width} height={footprint.height} />
         ))}
       </span>
-      <span class="label">{label === 'long' ? `${name} · step ${stage} of ${STAGE_COUNT}` : name}</span>
+      <span class="label">
+        {label === 'long' ? `${name} · step ${stage} of ${STAGE_COUNT}` : name}
+        {detail && <span class="detail">{` · ${detail}`}</span>}
+      </span>
     </div>
   )
 }
@@ -84,6 +89,11 @@ const steps = STAGE_NAMES.map((stepName, i) => ({ stepName, reached: i < stage, 
 
   .label {
     font-weight: 600;
+  }
+
+  .detail {
+    font-weight: 400;
+    color: var(--site-text-quiet);
   }
 
   /* Steps: a wrapping row of columns, each a print with its stage name beneath. */
