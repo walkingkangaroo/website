@@ -17,13 +17,15 @@ interface Props {
   radius?: string;
   /** Show the video's own controls (the project page). */
   controls?: boolean;
+  /** The video's accessible name when it has controls, for example "Common Ground clip". */
+  label?: string;
   /** Fill the parent (which must be positioned) instead of keeping `aspect`. The hero uses this. */
   fill?: boolean;
   /** The image's `sizes` attribute: how wide the panel is in the layout. Defaults to the viewport. */
   sizes?: string;
 }
 
-const { image, clip, poster, aspect = '16 / 9', alt, radius = '0', controls = false, fill = false, sizes = '100vw' } = Astro.props;
+const { image, clip, poster, aspect = '16 / 9', alt, radius = '0', controls = false, label, fill = false, sizes = '100vw' } = Astro.props;
 // The video type from the file extension; left out when it is not one we know.
 const clipType = clip ? { mp4: 'video/mp4', webm: 'video/webm' }[clip.split('.').pop()?.toLowerCase() ?? ''] : undefined;
 const posterSrc = typeof poster === 'string' ? poster : poster?.src;
@@ -42,6 +44,7 @@ const posterSrc = typeof poster === 'string' ? poster : poster?.src;
         preload="metadata"
         controls={controls}
         aria-hidden={controls ? undefined : 'true'}
+        aria-label={controls ? label : undefined}
       >
         {/* The source only matches when motion is welcome, so a visitor who prefers reduced motion sees just the poster (no script needed, decision 0013). */}
         <source src={clip} type={clipType} media="(prefers-reduced-motion: no-preference)" />
