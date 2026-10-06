@@ -46,13 +46,15 @@ Studios' 2017 game; Grant has confirmed it is cleared to show.
    media), so updating a stage or adding a post is a one-file change.
    Astro 7 on Node 24 (0008). Run and checked locally only; nothing is published until launch
    (0011). Shaped in [rounds/build-the-site.md](rounds/build-the-site.md).
-3. **Content**: per project a one-liner, stage, platforms, cover art and one gameplay clip
-   (Godot Movie Maker for the games, dev-server screenshots for PanePilot), and one devlog post
-   each at launch. Grant supplies any cover art he has, his photo and a short bio.
+3. **Content**: per project a description and the cover art Grant supplies (0016), with Windows
+   and Steam for the four games (0017); Grant's photo and a short bio, with no links (0019); and
+   one devlog post per project, kept as a draft until launch (0020). Claude drafts the words and
+   Grant rewrites them (0014). Gameplay clips wait in Backlog (0015). Shaped in
+   [rounds/content.md](rounds/content.md).
 4. **Newsletter**: Kit's free plan, its form embedded; Kit's sending records and an SPF record
    added at VentraIP.
 5. **Launch**: the GitHub Pages workflow and `CNAME` (0011); Grant adds the apex and www records at VentraIP; check HTTPS, link
    previews and the phone layout.
 
-Later: release pages (the "Released product page" board), Steam wishlist buttons once store
+Later: gameplay clips (0015), release pages (the "Released product page" board), Steam wishlist buttons once store
 pages exist, a press kit.
