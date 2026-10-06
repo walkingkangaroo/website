@@ -14,7 +14,6 @@ const others = (await getProjects()).filter((project) => !project.data.featured)
 const latestPosts = (await getPublishedPosts()).slice(0, 3);
 ---
 
-{/* The description is a draft for Grant to check in the pull request. */}
 <BaseLayout title="Walking Kangaroo" description="Grant's games and apps, and how far along each one is.">
   <HomeHero project={featured} />
 

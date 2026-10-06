@@ -47,7 +47,7 @@ Studios' 2017 game; Grant has confirmed it is cleared to show.
    Astro 7 on Node 24 (0008). Run and checked locally only; nothing is published until launch
    (0011). Shaped in [rounds/build-the-site.md](rounds/build-the-site.md).
 3. **Content**: per project a description and the cover art Grant supplies (0016), with Windows
-   and Steam for the four games (0017); Grant's photo and a short bio, with no links (0019); and
+   and Steam for the four games (0017); a short bio, with no photo (0021) and no links (0019); and
    one devlog post per project, kept as a draft until launch (0020). Claude drafts the words and
    Grant rewrites them (0014). Gameplay clips wait in Backlog (0015). Shaped in
    [rounds/content.md](rounds/content.md).
