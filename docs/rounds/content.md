@@ -1,6 +1,6 @@
 # Decision round: content
 
-Status: Waiting on Grant
+Status: Answered
 Opened: 2026-10-06
 Issue: https://linear.app/walkingkangaroo/issue/KAN-753/shape-content
 Research: [docs/research/content.md](../research/content.md)
@@ -19,7 +19,7 @@ Say "use the defaults" to take every default below.
   until you've changed it to your words.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** default taken (A). Grant, 2026-10-06: "use the defaults except: …"
 
 ### 2. Where do the gameplay clips come from?
 
@@ -33,7 +33,7 @@ Say "use the defaults" to take every default below.
   this repo.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** C. Grant, 2026-10-06: "2. c"
 
 ### 3. Where does each project's cover come from?
 
@@ -47,7 +47,7 @@ game.
   hold the milestone on art.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** B. Grant, 2026-10-06: "3. b"
 
 ### 4. Are these the right facts for each project?
 
@@ -68,7 +68,7 @@ one shown ("Target: 2027").
   which would suggest "PC, Steam" for Common Ground too.
 - **Default if unanswered:** the table as it stands.
 - **For:** Grant
-- **Answer:**
+- **Answer:** B: Common Ground, Arcsine, Aussie Trucker and Perso are all Windows and Steam. Grant, 2026-10-06: "4. all games are windows/steam". PanePilot, stages and targets: default taken (as in the table).
 
 ### 5. Does each project page get a "Working on now" list?
 
@@ -81,7 +81,7 @@ The page shows it in a side panel when the file has one.
   updates it for you.
 - **Default if unanswered:** B.
 - **For:** Grant
-- **Answer:**
+- **Answer:** default taken (B). Grant, 2026-10-06: "use the defaults except: …"
 
 ### 6. Which links sit under your bio on the about section?
 
@@ -95,7 +95,7 @@ kit is held out to Backlog either way.
   address to use.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** None: no links under the bio, not even GitHub. Grant, 2026-10-06: "6. none"
 
 ### 7. When are the five devlog posts written?
 
@@ -107,23 +107,23 @@ The brief says one post per project at launch.
   context fresh, and `draft` keeps them off the built site until you choose.
 - **Default if unanswered:** A.
 - **For:** Grant
-- **Answer:**
+- **Answer:** default taken (A). Grant, 2026-10-06: "use the defaults except: …"
 
 ## Decided without asking
 
-- **Clip format:** H.264 MP4 only, no audio track, 1280×720 at 30 fps, 10–20 s looping,
-  under 5 MB, `+faststart`, with a poster frame. MP4 plays everywhere the site runs; WebM would
-  only shave size.
-- **One encode script** (`scripts/encode-clip.sh`) is its own first issue, so the five project
-  issues don't each reinvent it.
-- **Covers** are 16:9, at least 1800 px wide and under 500 KB, with the subject in the middle
-  42 % so the 3:4 card crop works. They live in `src/assets/projects/`.
-- **One issue per project**, owning only that project's content file, cover and clip, so they
+- **Clip format and the encode script:** moved to Backlog with the clips (question 2). When
+  clips come back: H.264 MP4 only, no audio, 1280×720 at 30 fps, 10–20 s looping, under 5 MB,
+  `+faststart`, with a poster frame.
+- **Covers** are Grant's art (question 3), asked for as 16:9, at least 1800 px wide, with the
+  subject in the middle 42 % so the 3:4 card crop works. The issue resizes it under 500 KB if
+  needed, never redraws it, and keeps it in `src/assets/projects/`. Grant attaches it to the
+  project's Linear issue.
+- **One issue per project**, owning only that project's content file and cover, so they
   can run in parallel.
-- **PanePilot screenshots use sample data only.** If the local database holds real customers,
-  the issue stops and asks; nothing from `fergus-exports/` or the invoice snapshots is used.
-- **Aussie Trucker's page credits OpenStreetMap** ("© OpenStreetMap contributors") when its clip
-  or cover shows the map-derived world, as ODbL requires. If the shot shows ELVIS-derived
+- **Nothing from PanePilot's `fergus-exports/` or invoice snapshots is used.** They hold real
+  customer data.
+- **Aussie Trucker's page credits OpenStreetMap** ("© OpenStreetMap contributors") when its cover
+  shows the map-derived world, as ODbL requires. If the cover shows ELVIS-derived
   elevation, that issue stops and asks.
 - **Concept mockups are never shown as gameplay.**
 - **The example devlog post is removed** once the first real post exists.
@@ -131,14 +131,28 @@ The brief says one post per project at launch.
 
 ## Held out
 
+- Gameplay clips for all five projects, and the encode script they need: Backlog (question 2).
 - Press kit: Backlog.
 - The newsletter band's "how often you'll write" line: the Newsletter step.
 - Dedicated 3:4 card art separate from the cover: Backlog, if a crop doesn't work.
 
 ## Outcome
 
-Filled in when the answers are recorded.
-
-- Decisions: <links to the decision records>
-- Spec or design changes: <files>
-- Issues: <full Linear URLs, in build order>
+- Decisions: [0014](../decisions/0014-claude-drafts-grant-rewrites.md),
+  [0015](../decisions/0015-no-clips-yet.md), [0016](../decisions/0016-grant-supplies-covers.md),
+  [0017](../decisions/0017-games-list-windows-and-steam.md),
+  [0018](../decisions/0018-no-working-on-now.md), [0019](../decisions/0019-about-has-no-links.md),
+  [0020](../decisions/0020-devlog-posts-drafted-now.md)
+- Spec or design changes: `docs/brief.md` (step 3 and Later), `docs/DECISIONS.md`
+- Issues (milestone Content; the project issues can run in any order, each waits on Grant's cover):
+  1. https://linear.app/walkingkangaroo/issue/KAN-754/common-ground-shows-its-cover-art-and-a-description-in-grants-words
+  2. https://linear.app/walkingkangaroo/issue/KAN-755/arcsine-shows-its-cover-art-and-a-description-in-grants-words
+  3. https://linear.app/walkingkangaroo/issue/KAN-756/aussie-trucker-shows-its-cover-art-and-a-description-in-grants-words
+  4. https://linear.app/walkingkangaroo/issue/KAN-757/perso-shows-its-cover-art-and-a-description-in-grants-words
+  5. https://linear.app/walkingkangaroo/issue/KAN-758/panepilot-shows-its-cover-art-and-a-description-in-grants-words
+  6. https://linear.app/walkingkangaroo/issue/KAN-759/the-about-section-shows-grants-photo-and-bio-with-no-links
+  7. https://linear.app/walkingkangaroo/issue/KAN-760/each-project-has-a-first-devlog-post-waiting-as-a-draft-for-launch
+- Held out to Backlog:
+  - https://linear.app/walkingkangaroo/issue/KAN-761/add-a-gameplay-clip-to-each-project
+  - https://linear.app/walkingkangaroo/issue/KAN-762/add-a-press-kit
+  - https://linear.app/walkingkangaroo/issue/KAN-763/let-a-project-have-separate-34-card-art

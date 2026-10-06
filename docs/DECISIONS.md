@@ -19,6 +19,13 @@ row below in the same pull request. To change one: write a new record and mark t
 | [0010](decisions/0010-site-tints.md) | The site uses seven Paper and Ink tints alongside the brand colours | Accepted |
 | [0012](decisions/0012-project-page-scope.md) | Project pages leave out the playtest parts until there is a playtest | Accepted |
 | [0013](decisions/0013-phone-header-wraps.md) | On a phone the header links wrap under the logo, with no menu button | Accepted |
+| [0014](decisions/0014-claude-drafts-grant-rewrites.md) | Claude drafts the site's words, and Grant rewrites them before they merge | Accepted |
+| [0015](decisions/0015-no-clips-yet.md) | No gameplay clips in the Content step | Accepted |
+| [0016](decisions/0016-grant-supplies-covers.md) | Grant supplies each project's cover art | Accepted |
+| [0017](decisions/0017-games-list-windows-and-steam.md) | The four games list Windows and Steam | Accepted |
+| [0018](decisions/0018-no-working-on-now.md) | Project pages leave out "Working on now" | Accepted |
+| [0019](decisions/0019-about-has-no-links.md) | The about section has no links | Accepted |
+| [0020](decisions/0020-devlog-posts-drafted-now.md) | The first devlog posts are written now and kept as drafts until launch | Accepted |
 
 ## Platform, code and process
 
