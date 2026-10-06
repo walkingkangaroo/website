@@ -26,6 +26,7 @@ row below in the same pull request. To change one: write a new record and mark t
 | [0018](decisions/0018-no-working-on-now.md) | Project pages leave out "Working on now" | Accepted |
 | [0019](decisions/0019-about-has-no-links.md) | The about section has no links | Accepted |
 | [0020](decisions/0020-devlog-posts-drafted-now.md) | The first devlog posts are written now and kept as drafts until launch | Accepted |
+| [0021](decisions/0021-about-has-no-photo.md) | The about section has no photo | Accepted |
 
 ## Platform, code and process
 
