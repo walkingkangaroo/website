@@ -1,6 +1,6 @@
 # 0001. The site follows direction B2 · Daylight, built from the brand pack
 
-- **Status:** Accepted
+- **Status:** Accepted; the hero layout is superseded by [0022](0022-hero-text-beside-the-cover.md)
 - **Date:** 2026-10-05
 - **Issues:** —
 

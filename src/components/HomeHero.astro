@@ -15,20 +15,36 @@ const { name, oneLiner, stage, platforms, clip, cover } = project.data;
 const eyebrow = platforms.length ? `In development · ${platforms.join(' / ')}` : 'In development';
 const hasClip = Boolean(clip);
 
-// The footprint trail steps up and to the right. Offsets are from the trail's own box, whose top
-// right corner sits where the board puts the last print (136 px from the right, 72 px from the top).
+// The footprint trail steps up and to the right. The offsets are in pixels, measured on the board's
+// 234 x 279 box, and are turned into percentages of that box so the whole trail scales with it.
+const TRAIL_W = 234;
+const TRAIL_H = 279;
+const PRINT_W = 70;
 const trail = [
   { right: 164, top: 228, opacity: 0.15 },
   { right: 94, top: 133, opacity: 0.3 },
   { right: 42, top: 60, opacity: 0.55 },
   { right: 0, top: 0, opacity: 0.85 },
-];
+].map((step) => ({
+  right: `${((step.right / TRAIL_W) * 100).toFixed(2)}%`,
+  top: `${((step.top / TRAIL_H) * 100).toFixed(2)}%`,
+  opacity: step.opacity,
+}));
+const printWidth = `${((PRINT_W / TRAIL_W) * 100).toFixed(2)}%`;
 ---
 
 <section id="top" class="container hero-section">
   <div class="hero">
     <div class="hero__stage">
-      <MediaPanel fill image={cover} clip={clip} poster={cover} alt="" sizes="(min-width: 1360px) 1280px, 100vw" />
+      <MediaPanel
+        image={cover}
+        clip={clip}
+        poster={cover}
+        alt=""
+        aspect="16 / 9"
+        radius="24px"
+        sizes="(min-width: 1280px) 798px, (min-width: 1024px) calc((100vw - 120px) * 0.6875), calc(100vw - 2 * clamp(16px, 4vw, 40px))"
+      />
       <div class="trail" aria-hidden="true">
         {
           trail.map((step) => (
@@ -38,7 +54,7 @@ const trail = [
               width={markRust.width}
               height={markRust.height}
               alt=""
-              style={{ right: `${step.right}px`, top: `${step.top}px`, opacity: step.opacity }}
+              style={{ right: step.right, top: step.top, width: printWidth, opacity: step.opacity }}
             />
           ))
         }
@@ -76,48 +92,43 @@ const trail = [
     padding-top: 16px;
   }
 
+  /* Phones and tablets: the 16:9 image sits above the text, both the full width of the page. */
   .hero {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: 600px;
-    overflow: hidden;
-    border-radius: 24px;
-    background: var(--site-media);
+    display: block;
   }
 
-  /* On desktop the clip area is the whole panel, behind the text. */
+  /* The image panel is 16:9 and never cropped. It is the container the trail sizes itself from
+     (cqw). */
   .hero__stage {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    container-type: inline-size;
   }
 
+  /* The trail sits inside the image's top right corner, 4% of the panel's width in from the top
+     and right edges. Its width is 16% of the panel's width, held between 90 px and 130 px, so it is
+     90 px at 390 px wide (the panel is 358 px), about 118 px at 800 px wide (736 px panel, a
+     little less with a scrollbar) and 128 px at 1440 px wide (798 px panel). Its prints are sized
+     and placed as percentages of this box. */
   .trail {
     position: absolute;
-    right: 136px;
-    top: 72px;
-    width: 234px;
-    height: 279px;
+    right: 4cqw;
+    top: 4cqw;
+    width: clamp(90px, 16cqw, 130px);
+    aspect-ratio: 234 / 279;
     pointer-events: none;
   }
 
   .trail__print {
     position: absolute;
-    width: 70px;
     height: auto;
   }
 
   .hero__text {
-    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
-    max-width: 660px;
-    padding: clamp(24px, 5vw, 56px);
-    background: var(--wk-paper);
-    border-top-right-radius: 24px;
+    padding-top: 24px;
   }
 
   .eyebrow {
@@ -188,44 +199,43 @@ const trail = [
     color: var(--wk-paper);
   }
 
-  /* Tablets: the panel covers the lower part of the clip area, so the trail shrinks to half size in
-     the free space above it. */
-  @media (min-width: 720px) and (max-width: 1023px) {
-    .trail {
-      right: 24px;
-      top: 24px;
-      transform: scale(0.5);
-      transform-origin: top right;
+  /* Phones: the buttons span the full width. */
+  @media (max-width: 719px) {
+    .actions {
+      width: 100%;
     }
   }
 
-  /* Phones: the clip area is a 16:9 block above the text, which spans the full width. The trail
-     shrinks to half size in the clip area's top right corner. */
-  @media (max-width: 719px) {
+  /* Desktop: a split hero, text on the left and the image on the right, side by side with no
+     overlap and no box behind the text. The columns are 1fr and 2.2fr with a 40 px gap, so at
+     1440 px wide (a 1200 px content box) the text is 362 px and the image 798 px wide by 449 px
+     tall, which is the hero's height; at 1024 px wide the text column is about 280 px and the
+     image about 610 px by 345 px. Both columns are centred on the row, and the image is never
+     stretched or cropped: where the text is taller than the image (at 1024 px wide the text makes
+     the hero about 513 px tall) the row grows to the text and the image stays whole, centred in
+     it. */
+  @media (min-width: 1024px) {
     .hero {
-      display: block;
-      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+      column-gap: 40px;
+      align-items: center;
     }
 
     .hero__stage {
-      position: relative;
-      aspect-ratio: 16 / 9;
-    }
-
-    .trail {
-      right: 12px;
-      top: 12px;
-      transform: scale(0.5);
-      transform-origin: top right;
+      grid-column: 2;
+      grid-row: 1;
     }
 
     .hero__text {
-      max-width: none;
-      border-top-right-radius: 0;
+      grid-column: 1;
+      grid-row: 1;
+      padding-top: 0;
     }
 
-    .actions {
-      width: 100%;
+    /* The column is narrow, so the heading is a fixed 48 px (the tracking rule above applies). */
+    h1 {
+      font-size: 48px;
     }
   }
 </style>
