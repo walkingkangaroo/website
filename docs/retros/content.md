@@ -90,7 +90,7 @@ At most three. Each one is also a Process issue.
   draft markers when a round replaces drafts.
 - **How we'd know it worked:** at the next retro, no criterion struck or reworded during /do, and
   no follow-up filed at close-out for something the round's goal already covered.
-- **Process issue:** _filed after the pull request opens_
+- **Process issue:** https://linear.app/walkingkangaroo/issue/KAN-782/walkingkangaroocom-shape-checks-each-acceptance-criterion-against-the
 
 ### 2. /do records Grant's verdict on copy in the pull request before it is merged
 
@@ -108,7 +108,7 @@ At most three. Each one is also a Process issue.
 - **Risk:** one more question to Grant per copy issue, while he's at the keyboard.
 - **How we'd know it worked:** every copy pull request at the next retro says "confirmed",
   "rewritten" or "draft kept until <issue>".
-- **Process issue:** _filed after the pull request opens_
+- **Process issue:** https://linear.app/walkingkangaroo/issue/KAN-783/walkingkangaroocom-do-records-grants-verdict-on-copy-in-the-pull
 
 ## Could not measure
 
