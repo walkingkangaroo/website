@@ -12,7 +12,7 @@ row below in the same pull request. To change one: write a new record and mark t
 
 | # | Decision | Status |
 | --- | --- | --- |
-| [0001](decisions/0001-b2-daylight-design.md) | The site follows direction B2 · Daylight, built from the brand pack | Accepted |
+| [0001](decisions/0001-b2-daylight-design.md) | The site follows direction B2 · Daylight, built from the brand pack | Accepted (hero layout superseded by 0022) |
 | [0002](decisions/0002-projects-shown.md) | The site shows five projects, all in progress | Accepted |
 | [0006](decisions/0006-kit-newsletter.md) | Kit's free plan for the newsletter | Accepted |
 | [0009](decisions/0009-stage-meter-solid-footprints.md) | The stage meter uses one solid foot, faded for steps not reached | Accepted |
@@ -27,6 +27,7 @@ row below in the same pull request. To change one: write a new record and mark t
 | [0019](decisions/0019-about-has-no-links.md) | The about section has no links | Accepted |
 | [0020](decisions/0020-devlog-posts-drafted-now.md) | The first devlog posts are written now and kept as drafts until launch | Accepted |
 | [0021](decisions/0021-about-has-no-photo.md) | The about section has no photo | Accepted |
+| [0022](decisions/0022-hero-text-beside-the-cover.md) | The home hero shows the featured cover beside or above its text, never behind it | Accepted |
 
 ## Platform, code and process
 

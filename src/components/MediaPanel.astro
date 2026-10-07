@@ -9,7 +9,7 @@ interface Props {
   clip?: string;
   /** Still shown before the clip plays: an image from src/ or a path under public/. */
   poster?: ImageMetadata | string;
-  /** CSS aspect-ratio, for example "3 / 4" or "16 / 9". Ignored when `fill` is set. */
+  /** CSS aspect-ratio, for example "3 / 4" or "16 / 9". */
   aspect?: string;
   /** Alt text for the image. Use "" when the text beside it already says what it shows. */
   alt: string;
@@ -19,19 +19,17 @@ interface Props {
   controls?: boolean;
   /** The video's accessible name when it has controls, for example "Common Ground clip". */
   label?: string;
-  /** Fill the parent (which must be positioned) instead of keeping `aspect`. The hero uses this. */
-  fill?: boolean;
   /** The image's `sizes` attribute: how wide the panel is in the layout. Defaults to the viewport. */
   sizes?: string;
 }
 
-const { image, clip, poster, aspect = '16 / 9', alt, radius = '0', controls = false, label, fill = false, sizes = '100vw' } = Astro.props;
+const { image, clip, poster, aspect = '16 / 9', alt, radius = '0', controls = false, label, sizes = '100vw' } = Astro.props;
 // The video type from the file extension; left out when it is not one we know.
 const clipType = clip ? { mp4: 'video/mp4', webm: 'video/webm' }[clip.split('.').pop()?.toLowerCase() ?? ''] : undefined;
 const posterSrc = typeof poster === 'string' ? poster : poster?.src;
 ---
 
-<div class:list={['media-panel', { 'media-panel--fill': fill }]} style={{ '--aspect': aspect, '--radius': radius }}>
+<div class="media-panel" style={{ '--aspect': aspect, '--radius': radius }}>
   {
     clip ? (
       <video
@@ -63,13 +61,6 @@ const posterSrc = typeof poster === 'string' ? poster : poster?.src;
     aspect-ratio: var(--aspect);
     border-radius: var(--radius);
     background: var(--site-media);
-  }
-
-  .media-panel--fill {
-    position: absolute;
-    inset: 0;
-    width: auto;
-    aspect-ratio: auto;
   }
 
   .media-panel :global(.media) {
