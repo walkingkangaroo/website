@@ -24,8 +24,10 @@ const { Content } = await render(post);
 const dateText = new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 const dateIso = date.toISOString().slice(0, 10);
 
-// The share image is the cover at 1200 px wide; BaseLayout makes the path absolute.
-const shareImage = cover ? (await getImage({ src: cover, width: 1200, format: 'jpg' })).src : undefined;
+// The share image is the cover at 1200 px wide, or the project's cover when the post has none (as
+// on its card); BaseLayout makes the path absolute.
+const shareCover = cover ?? project?.data.cover;
+const shareImage = shareCover ? (await getImage({ src: shareCover, width: 1200, format: 'jpg' })).src : undefined;
 ---
 
 <BaseLayout title={title} description={summary} image={shareImage}>
